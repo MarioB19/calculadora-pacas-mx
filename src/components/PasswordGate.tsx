@@ -23,6 +23,7 @@ export default function PasswordGate({ children }: PasswordGateProps) {
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     // Verificar si ya tiene acceso persistido en localStorage
@@ -86,9 +87,14 @@ export default function PasswordGate({ children }: PasswordGateProps) {
   }
 
   return (
-    <div className="gate-container">
-      <div className="glass-card gate-card">
-        <div className="gate-icon">🔒</div>
+    <div className="gate-container animate-fade-in">
+      <div className={`glass-card gate-card ${isFocused ? "gate-card-focused" : ""}`}>
+        <div className="gate-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+        </div>
         <h1>Calculadora VIP</h1>
         <p className="subtitle" style={{ marginBottom: 20 }}>
           Ingresa tu código de acceso para desbloquear la versión completa de la Calculadora de Paca.
@@ -99,20 +105,33 @@ export default function PasswordGate({ children }: PasswordGateProps) {
             <label className="form-label" htmlFor="vip-code">
               Código de Acceso
             </label>
-            <input
-              id="vip-code"
-              type="password"
-              className="form-input"
-              placeholder="Ej. PACAS-XXXX-XXXX"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={isLoading}
-            />
+            <div className="input-icon-wrapper">
+              <input
+                id="vip-code"
+                type="password"
+                className="form-input has-icon"
+                placeholder="Ej. PACAS-XXXX-XXXX"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+              />
+              <svg className="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </div>
           </div>
 
           {errorMsg && (
-            <div className="alert-box error" role="alert">
-              {errorMsg}
+            <div className="alert-box error" role="alert" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              <span>{errorMsg}</span>
             </div>
           )}
 
@@ -127,7 +146,12 @@ export default function PasswordGate({ children }: PasswordGateProps) {
                 <span className="loader-spinner"></span> Validando...
               </>
             ) : (
-              "Desbloquear Calculadora"
+              <>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3.5-3.5-3 3z" />
+                </svg>
+                <span>Desbloquear Calculadora</span>
+              </>
             )}
           </button>
         </form>

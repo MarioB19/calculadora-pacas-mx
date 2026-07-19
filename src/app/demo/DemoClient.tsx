@@ -76,14 +76,13 @@ export default function DemoClient() {
             {/* INPUT 1: Costo Paca */}
             <div className="form-group">
               <label className="form-label" htmlFor="costo-paca">
-                Costo de la Paca
+                Costo de la Paca (MXN)
               </label>
-              <div className="input-wrapper">
-                <span className="input-prefix">$</span>
+              <div className="input-icon-wrapper">
                 <input
                   id="costo-paca"
                   type="number"
-                  className="form-input has-prefix"
+                  className="form-input has-icon"
                   placeholder="Ej. 3500"
                   required
                   min="1"
@@ -91,6 +90,10 @@ export default function DemoClient() {
                   onChange={(e) => setCostoPaca(e.target.value)}
                   disabled={isLoading}
                 />
+                <svg className="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="1" x2="12" y2="23"></line>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
               </div>
             </div>
 
@@ -99,17 +102,24 @@ export default function DemoClient() {
               <label className="form-label" htmlFor="numero-prendas">
                 Prendas totales (aprox)
               </label>
-              <input
-                id="numero-prendas"
-                type="number"
-                className="form-input"
-                placeholder="Ej. 150"
-                required
-                min="1"
-                value={prendas}
-                onChange={(e) => setPrendas(e.target.value)}
-                disabled={isLoading}
-              />
+              <div className="input-icon-wrapper">
+                <input
+                  id="numero-prendas"
+                  type="number"
+                  className="form-input has-icon"
+                  placeholder="Ej. 150"
+                  required
+                  min="1"
+                  value={prendas}
+                  onChange={(e) => setPrendas(e.target.value)}
+                  disabled={isLoading}
+                />
+                <svg className="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.37 8.91l-8.17-6.07a1 1 0 0 0-1.19 0L2.83 8.91a1 1 0 0 0-.37.77l.79 11.2a1 1 0 0 0 1 .92h14.89a1 1 0 0 0 1-.92l.79-11.2a1 1 0 0 0-.36-.77z"></path>
+                  <path d="M12 2v6"></path>
+                  <circle cx="12" cy="11" r="1.5"></circle>
+                </svg>
+              </div>
             </div>
 
             {/* INPUT 3: Precio promedio hoy */}
@@ -117,12 +127,11 @@ export default function DemoClient() {
               <label className="form-label" htmlFor="precio-hoy">
                 ¿A cuánto vendes HOY promedio por prenda?
               </label>
-              <div className="input-wrapper">
-                <span className="input-prefix">$</span>
+              <div className="input-icon-wrapper">
                 <input
                   id="precio-hoy"
                   type="number"
-                  className="form-input has-prefix"
+                  className="form-input has-icon"
                   placeholder="Ej. 60"
                   required
                   min="1"
@@ -130,6 +139,10 @@ export default function DemoClient() {
                   onChange={(e) => setPrecioHoy(e.target.value)}
                   disabled={isLoading}
                 />
+                <svg className="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                  <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
               </div>
             </div>
 
@@ -144,7 +157,14 @@ export default function DemoClient() {
                   <span className="loader-spinner"></span> Calculando...
                 </>
               ) : (
-                "Ver Resultados Gratis"
+                <>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="20" x2="12" y2="10" />
+                    <line x1="12" y1="20" x2="18" y2="10" />
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                  </svg>
+                  <span>Ver Resultados Gratis</span>
+                </>
               )}
             </button>
           </form>

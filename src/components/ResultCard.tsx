@@ -89,7 +89,12 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
   return (
     <div className="result-card-wrapper">
       {/* HÉROE: Ganancia principal */}
-      <div className="hero-results animate-fade-in">
+      <div className="hero-results animate-fade-in" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div className="landing-logo" style={{ background: "var(--primary-glow)", border: "none", width: "64px", height: "64px", borderRadius: "50%", marginBottom: "16px" }}>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </div>
         <div className="hero-label">Ganancia Proyectada</div>
         <div className="hero-amount" id="result-total-profit">
           ${gananciaProyectada.toLocaleString('es-MX')}
@@ -106,7 +111,12 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
       {gananciaHoy !== undefined && gananciaExtra !== undefined && (
         <div className="comparison-card animate-fade-in" id="comparison-hook">
           <div className="comparison-title">
-            ⚠️ ALERTA DE GANANCIA
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            ALERTA DE GANANCIA
           </div>
           {gananciaExtra > 0 ? (
             <>
@@ -119,8 +129,15 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
                 Usando precios inteligentes por categoría le sacas <strong>${gananciaProyectada.toLocaleString('es-MX')}</strong>.
               </div>
               {dejasIrMensual !== undefined && dejasIrMensual > 0 && (
-                <div className="alert-box warning" style={{ margin: "8px 0 0 0", padding: "8px 12px" }}>
-                  Si vendes <strong>{resultados.gananciaSistemaMensual ? Math.round(resultados.gananciaSistemaMensual / gananciaProyectada) : 1} pacas</strong> al mes, estás perdiendo <strong>${dejasIrMensual.toLocaleString('es-MX')} MXN</strong> mensuales por poner precios "a ojo".
+                <div className="alert-box warning" style={{ margin: "12px 0 0 0", padding: "10px 14px", display: "flex", gap: "8px", alignItems: "center" }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                  <span>
+                    Si vendes <strong>{resultados.gananciaSistemaMensual ? Math.round(resultados.gananciaSistemaMensual / gananciaProyectada) : 1} pacas</strong> al mes, estás perdiendo <strong>${dejasIrMensual.toLocaleString('es-MX')} MXN</strong> mensuales por poner precios "a ojo".
+                  </span>
                 </div>
               )}
             </>
@@ -137,20 +154,26 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
       {advertencias.length > 0 && (
         <div className="warnings-section">
           {advertencias.map((adv, idx) => (
-            <div className="alert-box info" key={idx} role="alert">
-              <strong>Ajuste de precio:</strong> {adv}
+            <div className="alert-box info" key={idx} role="alert" style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: "2px", flexShrink: 0 }}>
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+              <span><strong>Ajuste de precio:</strong> {adv}</span>
             </div>
           ))}
         </div>
       )}
 
-      {/* TABLA DE PRECIOS POR CATEGORÍA */}
+      {/* DETALLES DE PRECIOS POR CATEGORÍA */}
       <div className="glass-card" style={{ padding: "20px" }}>
-        <h2 style={{ fontSize: "17px", marginBottom: "12px" }}>Precios Sugeridos por Prenda</h2>
-        <p style={{ marginBottom: "16px", fontSize: "13px" }}>
+        <h2 style={{ fontSize: "17px", marginBottom: "12px", textAlign: "left" }}>Precios Sugeridos por Prenda</h2>
+        <p style={{ marginBottom: "16px", fontSize: "13px", textAlign: "left" }}>
           Reventa sugerida para canal: <strong>{NOMBRES_CANALES[canal] || canal}</strong>
         </p>
 
+        {/* VISTA DESKTOP: TABLA */}
         <div className="pricing-table-container">
           <table className="pricing-table">
             <thead>
@@ -164,7 +187,7 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
             <tbody>
               <tr>
                 <td>
-                  <strong>Primera</strong>
+                  <strong>⭐️ Primera</strong>
                   {ajustado1 !== "none" && (
                     <span className={`badge-clamped ${ajustado1 === "max" ? "badge-max" : "badge-min"}`}>
                       {ajustado1 === "max" ? "Topado" : "Ajustado"}
@@ -177,7 +200,7 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
               </tr>
               <tr>
                 <td>
-                  <strong>Segunda</strong>
+                  <strong>✨ Segunda</strong>
                   {ajustado2 !== "none" && (
                     <span className="badge-clamped badge-max">Topado</span>
                   )}
@@ -188,7 +211,7 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
               </tr>
               <tr>
                 <td>
-                  <strong>Tercera</strong>
+                  <strong>⚡️ Tercera</strong>
                   {ajustado3 !== "none" && (
                     <span className={`badge-clamped ${ajustado3 === "max" ? "badge-max" : "badge-min"}`}>
                       {ajustado3 === "max" ? "Topado" : "Ajustado"}
@@ -208,6 +231,77 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
             </tbody>
           </table>
         </div>
+
+        {/* VISTA MÓVIL: TARJETAS RESPONSIVAS (Evita desbordamiento) */}
+        <div className="pricing-cards-mobile">
+          {/* Primera */}
+          <div className="pricing-card-item primera">
+            <div className="pricing-card-info">
+              <span className="pricing-card-title">
+                ⭐️ Primera
+                {ajustado1 !== "none" && (
+                  <span className={`badge-clamped ${ajustado1 === "max" ? "badge-max" : "badge-min"}`} style={{ marginLeft: "6px" }}>
+                    {ajustado1 === "max" ? "Topado" : "Ajustado"}
+                  </span>
+                )}
+              </span>
+              <span className="pricing-card-qty">{prendas1} piezas</span>
+            </div>
+            <div className="pricing-card-values">
+              <span className="pricing-card-price">${precio1}</span>
+              <span className="pricing-card-subtotal">${(prendas1 * precio1).toLocaleString('es-MX')} subtotal</span>
+            </div>
+          </div>
+
+          {/* Segunda */}
+          <div className="pricing-card-item segunda">
+            <div className="pricing-card-info">
+              <span className="pricing-card-title">
+                ✨ Segunda
+                {ajustado2 !== "none" && (
+                  <span className="badge-clamped badge-max" style={{ marginLeft: "6px" }}>Topado</span>
+                )}
+              </span>
+              <span className="pricing-card-qty">{prendas2} piezas</span>
+            </div>
+            <div className="pricing-card-values">
+              <span className="pricing-card-price">${precio2}</span>
+              <span className="pricing-card-subtotal">${(prendas2 * precio2).toLocaleString('es-MX')} subtotal</span>
+            </div>
+          </div>
+
+          {/* Tercera */}
+          <div className="pricing-card-item tercera">
+            <div className="pricing-card-info">
+              <span className="pricing-card-title">
+                ⚡️ Tercera
+                {ajustado3 !== "none" && (
+                  <span className={`badge-clamped ${ajustado3 === "max" ? "badge-max" : "badge-min"}`} style={{ marginLeft: "6px" }}>
+                    {ajustado3 === "max" ? "Topado" : "Ajustado"}
+                  </span>
+                )}
+              </span>
+              <span className="pricing-card-qty">{prendas3} piezas</span>
+            </div>
+            <div className="pricing-card-values">
+              <span className="pricing-card-price">${precio3}</span>
+              <span className="pricing-card-subtotal">${(prendas3 * precio3).toLocaleString('es-MX')} subtotal</span>
+            </div>
+          </div>
+
+          {/* Total */}
+          <div className="pricing-card-item total">
+            <div className="pricing-card-info">
+              <span className="pricing-card-title" style={{ color: "var(--primary)" }}>Total Vendible</span>
+              <span className="pricing-card-qty">{prendasVendibles} piezas</span>
+            </div>
+            <div className="pricing-card-values">
+              <span className="pricing-card-price" style={{ color: "var(--primary)" }}>${ingresosTotales.toLocaleString('es-MX')}</span>
+              <span className="pricing-card-subtotal" style={{ color: "var(--primary)" }}>Ingreso total</span>
+            </div>
+          </div>
+        </div>
+
         <p style={{ fontSize: "12px", color: "var(--text-muted)", fontStyle: "italic", textAlign: "center" }}>
           * Costo promedio por prenda vendible: ${(inversionTotal / (prendasVendibles || 1)).toFixed(2)} MXN
         </p>
@@ -215,12 +309,12 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
 
       {/* PUNTO DE EQUILIBRIO VISUAL */}
       <div className="glass-card" style={{ padding: "20px" }}>
-        <h2 style={{ fontSize: "17px", marginBottom: "12px" }}>Punto de Equilibrio</h2>
+        <h2 style={{ fontSize: "17px", marginBottom: "12px", textAlign: "left" }}>Punto de Equilibrio</h2>
         
-        <p className="breakeven-text" dangerouslySetInnerHTML={{ __html: descripcionBreakeven }} />
+        <p className="breakeven-text" style={{ textAlign: "left" }} dangerouslySetInnerHTML={{ __html: descripcionBreakeven }} />
 
         {prendasBreakeven > 0 && (
-          <div className="breakeven-container">
+          <div className="breakeven-container animate-fade-in">
             <div className="breakeven-bar-wrapper">
               {categoriasBreakeven.primera > 0 && (
                 <div 
@@ -266,8 +360,8 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
               )}
             </div>
 
-            <div style={{ marginTop: "14px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", color: "var(--text-muted)", marginBottom: "4px" }}>
+            <div style={{ marginTop: "16px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>
                 <span>Prendas de recuperación: {prendasBreakeven} pzas</span>
                 <span>Prendas de ganancia: {prendasVendibles - prendasBreakeven} pzas</span>
               </div>
@@ -275,7 +369,7 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
                 <div className="breakeven-segment primera" style={{ width: `${pctRecuperacionTotal}%` }} />
                 <div className="breakeven-segment remaining" style={{ width: `${100 - pctRecuperacionTotal}%` }} />
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: "600", marginTop: "4px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: "600", marginTop: "6px" }}>
                 <span style={{ color: "var(--primary)" }}>Inversión ({Math.round(pctRecuperacionTotal)}%)</span>
                 <span style={{ color: "var(--success)" }}>Ganancia pura ({Math.round(100 - pctRecuperacionTotal)}%)</span>
               </div>
@@ -286,8 +380,8 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
 
       {/* ESTIMACIÓN SEMANAL (OPCIONAL) */}
       <div className="glass-card" style={{ padding: "20px" }}>
-        <h2 style={{ fontSize: "17px", marginBottom: "12px" }}>¿En cuánto tiempo recuperas?</h2>
-        <p style={{ marginBottom: "12px" }}>
+        <h2 style={{ fontSize: "17px", marginBottom: "12px", textAlign: "left" }}>¿En cuánto tiempo recuperas?</h2>
+        <p style={{ marginBottom: "12px", fontSize: "13.5px", textAlign: "left" }}>
           Ingresa cuántas prendas estimas vender a la semana para calcular tus semanas de retorno.
         </p>
 
@@ -296,23 +390,32 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
             <label className="form-label" htmlFor="semanal-vta" style={{ fontSize: "11px" }}>
               Prendas vendidas por semana
             </label>
-            <input
-              id="semanal-vta"
-              type="number"
-              className="form-input"
-              placeholder="Ej. 25"
-              value={semanalInput}
-              onChange={(e) => setSemanalInput(e.target.value)}
-            />
+            <div className="input-icon-wrapper">
+              <input
+                id="semanal-vta"
+                type="number"
+                className="form-input has-icon"
+                placeholder="Ej. 25"
+                value={semanalInput}
+                onChange={(e) => setSemanalInput(e.target.value)}
+              />
+              <svg className="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
           </div>
-          <button type="submit" className="btn btn-primary" style={{ width: "auto", padding: "14px 20px" }}>
+          <button type="submit" className="btn btn-primary" style={{ width: "auto", padding: "14px 20px", height: "48px", borderRadius: "var(--radius-sm)" }}>
             Calcular
           </button>
         </form>
 
         {semanalRes && (
-          <div className="alert-box info" style={{ marginTop: "14px", marginBottom: 0 }}>
-            ✨ {semanalRes}
+          <div className="alert-box info" style={{ marginTop: "14px", marginBottom: 0, display: "flex", gap: "8px", alignItems: "center" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+            <span>{semanalRes}</span>
           </div>
         )}
       </div>
@@ -320,10 +423,16 @@ Calcula tu paca aquí: https://app-pacas.inovaris.online/demo`;
       {/* ACCIONES */}
       <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "8px", marginBottom: "30px" }}>
         <button className="btn btn-whatsapp" onClick={handleShareWhatsApp} id="btn-share-whatsapp">
-          💬 Compartir Resultados en WhatsApp
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+          </svg>
+          Compartir en WhatsApp
         </button>
         <button className="btn btn-secondary" onClick={onReset} id="btn-recalculate">
-          🔄 Calcular Otra Paca
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+          </svg>
+          Calcular Otra Paca
         </button>
       </div>
     </div>
