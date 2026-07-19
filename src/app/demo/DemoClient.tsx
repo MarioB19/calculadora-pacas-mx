@@ -65,7 +65,7 @@ export default function DemoClient() {
 
   return (
     <main className="app-container">
-      <div className="glass-card" style={{ marginTop: "20px" }}>
+      <div className="glass-card" style={{ maxWidth: "600px", margin: "20px auto 24px auto", width: "100%" }}>
         <h1>Calculadora de Paca</h1>
         <p className="subtitle">
           Descubre cuánto dinero dejas ir por poner precios "a ojo" en tus prendas.
@@ -202,6 +202,23 @@ export default function DemoClient() {
                   Clasificando por categoría optimizas tu inventario para recuperar más rápido y vender la ropa premium a su verdadero valor.
                 </div>
               )}
+            </div>
+
+            {/* Banner Evaluador Pre-compra VIP CTA */}
+            <div className="comparison-card" style={{ textAlign: "left", marginTop: "16px", border: "1px dashed var(--primary)", background: "rgba(30, 75, 143, 0.03)" }}>
+              <div className="comparison-title" style={{ fontSize: "13px", color: "var(--primary)" }}>
+                🔍 ¿Vas a comprar una paca?
+              </div>
+              <div className="comparison-lost" style={{ fontSize: "15px", color: "var(--text-main)", margin: "4px 0" }}>
+                ¡Evalúa tu oferta antes de gastar!
+              </div>
+              <div className="comparison-text" style={{ fontSize: "13px" }}>
+                Evita pérdidas con nuestro <strong>Evaluador Pre-Compra</strong>. Descubre si los números salen, compara hasta 3 ofertas y calcula el precio máximo que deberías pagar.
+                <br />
+                <span style={{ fontSize: "11px", color: "var(--text-muted)", display: "block", marginTop: "6px" }}>
+                  🔒 Disponible exclusivamente en la versión VIP.
+                </span>
+              </div>
             </div>
 
             {/* CTA checkout */}

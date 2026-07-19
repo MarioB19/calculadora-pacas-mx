@@ -88,6 +88,7 @@ export interface CalculoResultados {
   gananciaHoyMensual?: number;
   gananciaSistemaMensual?: number;
   dejasIrMensual?: number;
+  inputsInfo?: CalculoInput;
 }
 
 // Redondear a múltiplos de $5 (Psicología de tianguis)
@@ -279,7 +280,8 @@ export function realizarCalculos(input: CalculoInput): CalculoResultados {
       primera: necesarias1,
       segunda: necesarias2,
       tercera: necesarias3
-    }
+    },
+    inputsInfo: input
   };
 
   // Comparativa "hoy" si se provee el precio actual del usuario
@@ -295,4 +297,91 @@ export function realizarCalculos(input: CalculoInput): CalculoResultados {
   }
 
   return resultados;
+}
+
+export const UMBRAL_VERDE = 2.0;
+export const UMBRAL_AMARILLO = 1.5;
+
+export interface EvaluacionInput {
+  costoPaca: number;
+  prendas: number;
+  porcentajePrimera: number;
+  porcentajeSegunda: number;
+  porcentajeTercera: number;
+  canal: 'marketplace' | 'whatsapp' | 'tianguis';
+}
+
+export interface EvaluacionResultado {
+  veredicto: 'verde' | 'amarillo' | 'rojo';
+  ratio: number;
+  costoPorPrenda: number;
+  gananciaProyectada: number;
+  precioMaximoPagar: number;
+  calculoDetalle: CalculoResultados;
+}
+
+export function calcularEvaluacionPreCompra(input: EvaluacionInput): EvaluacionResultado {
+  const {
+    costoPaca,
+    prendas,
+    porcentajePrimera,
+    porcentajeSegunda,
+    porcentajeTercera,
+    canal
+  } = input;
+
+  const mermaPorcentaje = 5; // Merma estándar de 5%
+  const totalInversion = costoPaca;
+
+  // Distribución de prendas por clasificación
+  const prendas1 = Math.round(prendas * (porcentajePrimera / 100));
+  const prendas2 = Math.round(prendas * (porcentajeSegunda / 100));
+  const prendas3SinMerma = Math.round(prendas * (porcentajeTercera / 100));
+  const prendasMerma = Math.round(prendas * (mermaPorcentaje / 100));
+  const prendas3 = Math.max(0, prendas3SinMerma - prendasMerma);
+  const prendasVendibles = prendas1 + prendas2 + prendas3;
+
+  const costoPorPrenda = prendasVendibles > 0 ? totalInversion / prendasVendibles : 0;
+
+  // Clamping contra la tabla de rangos del canal
+  const rangosCanal = PRECIOS_SEMILLA[canal] || PRECIOS_SEMILLA.marketplace;
+
+  // Ingresos máximos posibles en este canal
+  const maxIngresos = (prendas1 * rangosCanal.primera.max) +
+                      (prendas2 * rangosCanal.segunda.max) +
+                      (prendas3 * rangosCanal.tercera.max);
+
+  // Precio máximo a pagar para duplicar (ratio = 2.0)
+  const precioMaximoPagar = maxIngresos / 2.0;
+
+  // Simulación realista a 2.0
+  const calculoDetalle = realizarCalculos({
+    costoPaca,
+    gastosExtra: 0,
+    prendas,
+    porcentajePrimera,
+    porcentajeSegunda,
+    porcentajeTercera,
+    merma: mermaPorcentaje,
+    metaGanancia: 2.0,
+    canal
+  });
+
+  const ratio = totalInversion > 0 ? calculoDetalle.ingresosTotales / totalInversion : 0;
+
+  let veredicto: 'verde' | 'amarillo' | 'rojo' = 'rojo';
+  if (ratio >= UMBRAL_VERDE) {
+    veredicto = 'verde';
+  } else if (ratio >= UMBRAL_AMARILLO) {
+    veredicto = 'amarillo';
+  }
+
+  return {
+    veredicto,
+    ratio,
+    costoPorPrenda,
+    gananciaProyectada: calculoDetalle.gananciaProyectada,
+    precioMaximoPagar,
+    calculoDetalle
+  };
 }
