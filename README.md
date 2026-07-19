@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Calculadora de Paca — Pacas MX 🧮👚
 
-## Getting Started
+¡Bienvenido al repositorio de la **Calculadora de Paca**! Una aplicación web premium, responsiva e interactiva creada para revendedoras y comerciantes de ropa de paca en México. Esta herramienta optimiza la fijación de precios, calcula las ganancias proyectadas y ayuda a planificar el retorno de inversión.
 
-First, run the development server:
+## 🚀 Funcionalidades Principales
+
+- **Fijación de Precios por Categorías:** Clasifica la ropa en *Primera* (premium/marca), *Segunda* (buen estado) y *Tercera* (remate/detalles).
+- **Ajuste Inteligente por Canal:** Adapta los precios recomendados a las realidades de venta física y digital en México (*Marketplace*, *WhatsApp* y *Tianguis*).
+- **Gestión Automática de Merma:** Absorbe las pérdidas por prendas rotas o sucias deduciéndolas del lote de remates de forma matemática.
+- **Punto de Equilibrio (Breakeven):** Te dice exactamente cuántas prendas y de qué categorías debes vender para recuperar el 100% de tu inversión.
+- **Historial Persistido (Versión VIP):** Guarda hasta 10 pacas calculadas localmente para cargarlas al instante.
+- **Compartir por WhatsApp:** Genera reportes listos con formato y emojis para enviar de inmediato.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+- **Frontend:** Next.js (App Router), React, TypeScript.
+- **Estilos:** Vanilla CSS moderno (diseño responsivo, glassmorphism, temas de color estilizados).
+- **Seguridad:** Criptografía nativa (`Web Crypto API`) con hashing SHA-256 para el acceso VIP.
+- **Persistencia:** LocalStorage para guardar configuraciones y el historial de cálculos.
+
+---
+
+## 📖 Documentación Detallada
+
+Para una explicación técnica profunda que incluye:
+- El modelo matemático de ponderación (Primera 3.5x, Segunda 2x, Tercera 0.8x).
+- Los rangos de precios por canal de venta en México.
+- Detalles del algoritmo Greedy de punto de equilibrio.
+- Flujo de balanceo dinámico de sliders.
+
+Consulta el archivo completo de [Documentación del Producto (DOCUMENTACION.md)](file:///Users/brandonmuro/Desktop/calculadora-pacas/DOCUMENTACION.md).
+
+---
+
+## 💻 Desarrollo Local
+
+### 1. Clonar el repositorio e instalar dependencias
+
+```bash
+npm install
+```
+
+### 2. Levantar el servidor de desarrollo
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver la aplicación.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Compilar para producción
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔒 Acceso VIP
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+La versión completa/VIP está bloqueada por motivos de distribución. 
+- **Código de acceso:** `PACAS-VIP-2026`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Desarrollado por **Brandon Muro** para **Pacas MX** · 2026.
